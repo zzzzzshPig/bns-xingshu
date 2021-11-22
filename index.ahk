@@ -51,5 +51,5 @@ XButton2::
 XButton2 Up::
     isDown := false
     clearTimer() ; 松开按键取消timer
-    SetTimer, resetFirstTap, 6000 ; 八秒没有再次按下x2就当作第一次按
+    SetTimer, resetFirstTap, 6000 ; 一定时间内没有再次按下x2就当作第一次按
     return
