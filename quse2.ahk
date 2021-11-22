@@ -24,8 +24,35 @@ baofa() {
 
     firstTap := false
 
-    ; 普通攻击
-    SendPlay, vv2244ffrrtt
+    ;触发v
+    PixelGetColor, vColor, 1377, 1284, RGB
+    if (vColor = "0x68C1E5") {
+        SendPlay, vv
+    }
+
+    ;触发2
+    PixelGetColor, 2Color, 1249, 1199, RGB
+    if (2Color = "0x78EAFF" || 2Color = "0x5672A2") {
+        SendPlay, 22
+    }
+
+    ;触发4
+    PixelGetColor, 4Color, 1384, 1200, RGB
+    if (4Color = "0x4886CE") {
+        SendPlay, 44
+    }
+
+    ;触发f
+    SendPlay, ff
+
+    ;触发r
+    PixelGetColor, rColor, 1465, 1197, RGB
+    if (rColor = "0xFEFFFF") {
+        SendPlay, rr
+    }
+
+    ;触发t
+    SendPlay, tt
 }
 
 clearTimer() {
@@ -41,5 +68,5 @@ XButton2::
 
 XButton2 Up::
     clearTimer() ; 松开按键取消timer
-    SetTimer, resetFirstTap, 8000 ; 八秒没有再次按下x2就当作第一次按
+    SetTimer, resetFirstTap, 6000 ; 八秒没有再次按下x2就当作第一次按
     return
