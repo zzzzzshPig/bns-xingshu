@@ -14,16 +14,16 @@ baofa() {
     ; 触发灵核 - 同步触发星和tab
     PixelGetColor, lingColor, 598, 405, RGB
     if (lingColor = "0x48DAFC") {
-        While (true) {
-            PixelGetColor, xingColor, 750, 884, RGB
-            PixelGetColor, tabColor, 1099, 1204, RGB
+        ;触发星
+        PixelGetColor, xingColor, 750, 884, RGB
+        if (xingColor = "0xD6C4B1") {
+            Send ``
+        }
 
-            ; 触发星和tab
-            if (xingColor = "0xD6C4B1" || tabColor = "0xA5AAD6") {
-                Send ``{Tab}
-            } else { ; 已经触发则跳出while
-                break
-            }
+        ;触发tab 
+        PixelGetColor, tabColor, 1099, 1204, RGB
+        if (tabColor = "0xA5AAD6") {
+            Send {Tab}
         }
     }
 
@@ -34,7 +34,7 @@ baofa() {
     ; 普通攻击
     SendPlay, vvffrrtt
 
-    SetTimer, baofa, -15
+    SetTimer, baofa, -10
 }
 
 clearTimer() {

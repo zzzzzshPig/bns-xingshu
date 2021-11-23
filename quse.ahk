@@ -1,4 +1,16 @@
+global isDown := false
+
+global can24 := false
+
+setCan24() {
+    can24 := true
+}
+
 attack() {
+    if (isDown = false) {
+        return
+    }
+
     ;灵核触发
     PixelGetColor, lingColor, 598, 405, RGB
     if (lingColor = "0x48DAFC") {
@@ -27,6 +39,16 @@ attack() {
     ;触发f
     SendPlay, f
 
+    ;触发r
+    PixelGetColor, rColor, 1465, 1197, RGB
+    if (rColor = "0xFEFFFF") {
+        SendPlay, r
+    }
+    
+    if (can24 = false) {
+        return
+    }
+
     ;触发2
     PixelGetColor, 2Color, 1249, 1199, RGB
     if (2Color = "0x78EAFF" || 2Color = "0x5672A2") {
@@ -38,24 +60,23 @@ attack() {
     if (4Color = "0x4886CE") {
         SendPlay, 4
     }
-
-    ;触发r
-    PixelGetColor, rColor, 1465, 1197, RGB
-    if (rColor = "0xFEFFFF") {
-        SendPlay, r
-    }
 }
 
 clearTimer() {
     SetTimer, attack, Off
+    SetTimer, setCan24, Off
 }
 
 XButton2::
-    clearTimer() ; 清除掉可能存在的timer，预防重复创建，也重置当前状态
+    isDown := true
+    can24 := false
+    clearTimer() ; 清除掉可能存在的timer，预防重复创建
+    SetTimer, setCan24, -1000
     ; 开始输出
     SetTimer, attack, 10
     return
 
 XButton2 Up::
+    isDown := false
     clearTimer() ; 松开按键取消timer
     return
