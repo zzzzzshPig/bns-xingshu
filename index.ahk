@@ -2,6 +2,12 @@ global isDown := false
 
 global can24 := false
 
+global canV := true
+
+setCanV() {
+    canV := false
+}
+
 setCan24() {
     can24 := true
 }
@@ -14,6 +20,9 @@ baofa() {
     ; 触发灵核 - 同步触发星和tab
     PixelGetColor, lingColor, 598, 405, RGB
     if (lingColor = "0x48DAFC") {
+        canV := true
+        SetTimer, setCanV, -42000
+
         ;触发星
         PixelGetColor, xingColor, 750, 884, RGB
         if (xingColor = "0xD6C4B1") {
@@ -28,11 +37,35 @@ baofa() {
     }
 
     if (can24 = true) {
-        SendPlay, 2244
+        ; 2
+        PixelGetColor, 2Color, 1254, 1186, RGB
+        if (2Color = "0x4F6583" || 2Color = "0x627791") {
+            SendPlay, 2
+        }
+        
+        ; 4
+        PixelGetColor, 4Color, 1384, 1183, RGB
+        if (4Color = "0xEDF2F8") {
+            SendPlay, 4
+        }
+    }
+
+    ; v
+    if (canV = true) {
+        PixelGetColor, vColor, 1384, 1271, RGB
+        if (vColor = "0x575778") {
+            SendPlay, v
+        }
+    }
+
+    ; r
+    PixelGetColor, rColor, 1467, 1185, RGB
+    if (rColor = "0xBCE4F5") {
+        SendPlay, r
     }
 
     ; 普通攻击
-    SendPlay, vvffrrtt
+    SendPlay, ft
 
     SetTimer, baofa, -10
 }
@@ -40,6 +73,7 @@ baofa() {
 clearTimer() {
     SetTimer, baofa, Off
     SetTimer, setCan24, Off
+    SetTimer, setCanV, off
 }
 
 XButton2::
